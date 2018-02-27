@@ -36,18 +36,22 @@ class Audit
   end
 
   def check_billing_dates
-    errors = @company.timesheets.find_all do |timesheet|
-      project = @company.find_project_by_id(timesheet.project_id)
-      start_date = project.start_date
-      end_date = project.end_date
-      bill_date = DateHandler::DHDate.new(timesheet.date)
-      !bill_date.date_between(start_date, end_date)
-    end
+    errors = find_billing_errors
     result = errors.map do |timesheet|
       employee_name = @company.find_employee_by_id(timesheet.employee_id).name
       project_name = @company.find_project_by_id(timesheet.project_id).name
       "#{employee_name} worked on #{project_name} outside of billing period."
     end
     result[0]
+  end
+
+  def find_billing_errors
+    @company.timesheets.find_all do |timesheet|
+      project = @company.find_project_by_id(timesheet.project_id)
+      start_date = project.start_date
+      end_date = project.end_date
+      bill_date = DateHandler::DHDate.new(timesheet.date)
+      !bill_date.date_between(start_date, end_date)
+    end
   end
 end

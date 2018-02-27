@@ -67,4 +67,16 @@ class AuditTest < Minitest::Test
 
     assert_equal expected, audit.check_billing_dates
   end
+
+  def test_find_billing_errors
+    audit = Audit.new
+    company = Company.new
+    company.load_employees('./data/employees.csv')
+    company.load_projects('./data/projects.csv')
+    company.load_timesheets('./data/timesheets.csv')
+    audit.load_company(company)
+
+    assert_instance_of Array, audit.find_billing_errors
+    assert_instance_of Timesheet, audit.find_billing_errors[0]
+  end
 end
