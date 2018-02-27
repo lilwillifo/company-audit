@@ -63,18 +63,8 @@ class AuditTest < Minitest::Test
     company.load_timesheets('./data/timesheets.csv')
     audit.load_company(company)
 
-    assert_equal 'no error', audit.check_billing_dates
-  end
+    expected = 'Susan Smith worked on More Widgets outside of billing period.'
 
-  def test_check_weekend_work
-    skip
-    audit = Audit.new
-    company = Company.new
-    company.load_employees('./data/employees.csv')
-    company.load_projects('./data/projects.csv')
-    company.load_timesheets('./data/timesheets.csv')
-    audit.load_company(company)
-
-    assert_equal 'no error', audit.check_weekend_work
+    assert_equal expected, audit.check_billing_dates
   end
 end
