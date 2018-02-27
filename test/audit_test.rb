@@ -22,7 +22,7 @@ class AuditTest < Minitest::Test
   end
 
   def test_were_invalid_days_worked
-    skip #integration
+    skip
     audit = Audit.new
     company = Company.new
     company.load_employees('./data/employees.csv')
@@ -53,5 +53,28 @@ class AuditTest < Minitest::Test
     audit.load_company(company)
 
     assert_nil audit.check_project_id
+  end
+
+  def test_check_billing_dates
+    skip
+    audit = Audit.new
+    company = Company.new
+    company.load_employees('./data/employees.csv')
+    company.load_projects('./data/projects.csv')
+    company.load_timesheets('./data/timesheets.csv')
+    audit.load_company(company)
+
+    assert_equal 'no error', audit.check_billing_dates
+  end
+
+  def test_check_weekend_work
+    audit = Audit.new
+    company = Company.new
+    company.load_employees('./data/employees.csv')
+    company.load_projects('./data/projects.csv')
+    company.load_timesheets('./data/timesheets.csv')
+    audit.load_company(company)
+
+    assert_equal 'no error', audit.check_weekend_work
   end
 end

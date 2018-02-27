@@ -1,3 +1,4 @@
+require './modules/date_handler'
 class Audit
   attr_reader :company
   def initialize
@@ -11,8 +12,8 @@ class Audit
   def were_invalid_days_worked
     check_employee_id
     check_project_id
-    #bill before project start/end
-    #weekend
+    check_billing_dates
+    checK_weekend_work
   end
 
   def check_employee_id
@@ -31,5 +32,20 @@ class Audit
       !projects.include?(id)
     end
     "Invalid project ID #{error[0]}" unless error.empty?
+  end
+
+  # def check_billing_dates
+  #   @company.timesheets.map do |timesheet|
+  #     project = @company.find_project_by_id(timesheet.project_id)
+  #     start_date = project.start_date
+  #     end_date = project.end_date
+  #     bill_date = timesheet.date
+  #     dh = DateHandler::DHDate(bill_date)
+  #     dh.date_between(start_date, end_date)
+  #   end
+  # end
+
+  def check_weekend_work
+    @company.timesheets.map(&:date).length
   end
 end
