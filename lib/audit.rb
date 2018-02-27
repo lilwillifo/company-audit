@@ -10,7 +10,7 @@ class Audit
 
   def were_invalid_days_worked
     check_employee_id
-    #check for wrong project id
+    check_project_id
     #bill before project start/end
     #weekend
   end
@@ -21,6 +21,15 @@ class Audit
     error = timesheet_ids.find_all do |id|
       !employees.include?(id)
     end
-    "Invalid employee ID #{error[0]}"
+    "Invalid employee ID #{error[0]}" unless error.empty?
+  end
+
+  def check_project_id
+    timesheet_ids = @company.timesheets.map(&:project_id).uniq
+    projects = @company.projects.map(&:project_id).uniq
+    error = timesheet_ids.find_all do |id|
+      !projects.include?(id)
+    end
+    "Invalid project ID #{error[0]}" unless error.empty?
   end
 end

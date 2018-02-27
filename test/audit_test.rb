@@ -43,4 +43,15 @@ class AuditTest < Minitest::Test
 
     assert_equal 'Invalid employee ID 3', audit.check_employee_id
   end
+
+  def test_check_project_id
+    audit = Audit.new
+    company = Company.new
+    company.load_employees('./data/employees.csv')
+    company.load_projects('./data/projects.csv')
+    company.load_timesheets('./data/timesheets.csv')
+    audit.load_company(company)
+
+    assert_nil audit.check_project_id
+  end
 end
