@@ -11,10 +11,7 @@ class Audit
   end
 
   def were_invalid_days_worked
-    check_employee_id
-    check_project_id
-    check_billing_dates
-    checK_weekend_work
+    "#{check_employee_id} #{check_project_id} #{check_billing_dates}"
   end
 
   def check_employee_id
@@ -23,7 +20,7 @@ class Audit
     error = timesheet_ids.find_all do |id|
       !employees.include?(id)
     end
-    "Invalid employee ID #{error[0]}" unless error.empty?
+    "Invalid employee ID #{error[0]}." unless error.empty?
   end
 
   def check_project_id
