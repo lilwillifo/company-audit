@@ -50,19 +50,18 @@ class CompanyTest < Minitest::Test
   def test_it_can_find_employee_by_id
     company = Company.new
     company.load_employees('./data/employees.csv')
+
     assert_instance_of Employee, company.find_employee_by_id(1)
     assert_equal 1, company.find_employee_by_id(1).employee_id
     assert_nil company.find_employee_by_id(30)
   end
+
+  def test_it_can_find_project_by_id
+    company = Company.new
+    company.load_projects('./data/projects.csv')
+
+    assert_instance_of Project, company.find_project_by_id(1)
+    assert_equal 1, company.find_project_by_id(1).project_id
+    assert_nil company.find_project_by_id(30)
+  end
 end
-
-
-#### company.find_employee_by_id(employee_id)
-
-# - Parameters: Integer
-# - Returns: Employee object, or nil
-#
-# This method should return a matching `Employee` object
-# for the `employee_id` passed to the method.
-# Return a `nil`
-# if there is no match.
