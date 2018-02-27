@@ -56,7 +56,6 @@ class AuditTest < Minitest::Test
   end
 
   def test_check_billing_dates
-    skip
     audit = Audit.new
     company = Company.new
     company.load_employees('./data/employees.csv')
@@ -68,6 +67,7 @@ class AuditTest < Minitest::Test
   end
 
   def test_check_weekend_work
+    skip
     audit = Audit.new
     company = Company.new
     company.load_employees('./data/employees.csv')
