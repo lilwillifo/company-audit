@@ -8,10 +8,7 @@ class Employee
     @employee_id = employee_id.to_i
     @name = name
     @role = role
-    start_year = start_date.split('-')[0].to_i
-    start_month = start_date.split('-')[1].to_i
-    start_day = start_date.split('-')[2].to_i
-    @start_date = Date.new(start_year, start_month, start_day)
-    # @end_date = Date.new(end_date)
+    @start_date = DateHandler.string_to_date(start_date)
+    @end_date = DateHandler.string_to_date(end_date)
   end
 end
